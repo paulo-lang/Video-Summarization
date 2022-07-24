@@ -9,7 +9,7 @@ import glob
 import cv2
 import numpy as np
 
-root_dir = 'Keyframes\\temp\\'
+root_dir = '/home/paulosantos/Downloads/Keyframes/Cam1/temp/'
 pth = root_dir + "*.png"
 tt = glob.glob(pth)
 #for i in range(1,len(tt)):
@@ -24,10 +24,12 @@ tt = glob.glob(pth)
 #        if score > 0.7: #means SSIM 
 #            cv2.imwrite(pathh, query_img)
 
-count = 0
-for i in range(1,len(tt)):
+i = 0
+#for i in range(1,len(tt)):
+while i < len(tt):
     query_img = cv2.imread(tt[i])
-    image_name = tt[i].split('\\')
+    exclude = False
+    image_name = tt[i].split('/')
    
 #    query_histt = cv2.calcHist([query_img],[0],None,[255],[0,256])
     for j in range(i+1,len(tt)):
@@ -38,17 +40,18 @@ for i in range(1,len(tt)):
 #        print (" distance = " , distt)
         difference = np.sum((query_img.astype("float") - compare_img.astype("float")) ** 2)
         difference /= float(query_img.shape[0] * compare_img.shape[1])
-        
 
-        
-        
         #print ("Score = " , score)
-        pathh = root_dir + 'kf\\' + image_name[2] 
+        pathh = root_dir + 'kf/' + image_name[7] 
 #        print (pathh)
-        if difference < 3000: 
-            print ("Writing Image ", pathh)
-            cv2.imwrite(pathh, query_img)
-#            print ("Different images",count)
-            count = count + 1
         
+        if difference < 3000: 
+            exclude = True
+
+    print(image_name[7])
+    print(exclude)        
+    if exclude==False:
+        print ("Writing Image ", pathh)
+        cv2.imwrite(pathh, query_img)
     
+    i = i + 1

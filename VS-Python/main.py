@@ -69,6 +69,7 @@ class Main:
             start_t = time.time()
             ttt = ttt + 1
             ret2, frame2 = capture.read()
+            cv2.waitKey(100)
             if ret2 is True:
 #            capture.release()
                 
@@ -84,7 +85,7 @@ class Main:
                         keyframe = capture.set(0,keyframe_number)
     #                        print (keyframe_number , " \t########")
                         temp, keyframe = capture.read()
-                        pathh = 'Keyframes/Cam1/temp/frame' + str(keyframe_number) + '.png'
+                        pathh = '/home/paulosantos/Downloads/Keyframes/Cam1/temp/frame' + str(keyframe_number) + '.png'
                         print ("############## \t 'Writing key frame at" , pathh, "'\t##############", "\a")
                         cv2.imwrite(pathh,keyframe)
                     print ("Different images = " , distt , "\t" , counter)
