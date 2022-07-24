@@ -49,7 +49,6 @@ print ("Caffe Model for Memorability Prediction Loaded")
 class Main: 
     
     def main():
-        #print ("Inside main function")
         capture = cv2.VideoCapture(video_path)
         total_frames = int(capture.get(cv2.CAP_PROP_FRAME_COUNT))#getting total number of frames
         fps = int(capture.get(cv2.CAP_PROP_FPS))#getting frame rate
@@ -61,17 +60,10 @@ class Main:
         counter = 1
         ttt = 0
         while(True):
-            
-#                capture.set(0,counter)
-#                ret1, frame1 = capture.read()
-                
-#                capture.set(0,counter+1)
             start_t = time.time()
             ttt = ttt + 1
             ret2, frame2 = capture.read()
-            cv2.waitKey(100)
             if ret2 is True:
-#            capture.release()
                 
                 distt = Shot_segmentation.segment(frame1,frame2)
                 print ('Processing ... ', ttt, ', of ', total_frames)
@@ -85,7 +77,7 @@ class Main:
                         keyframe = capture.set(0,keyframe_number)
     #                        print (keyframe_number , " \t########")
                         temp, keyframe = capture.read()
-                        pathh = '/home/paulosantos/Downloads/Keyframes/Cam1/temp/frame' + str(keyframe_number) + '.png'
+                        pathh = '/home/paulosantos/Downloads/Keyframes/1min/temp/' + str(keyframe_number) + '.png'
                         print ("############## \t 'Writing key frame at" , pathh, "'\t##############", "\a")
                         cv2.imwrite(pathh,keyframe)
                     print ("Different images = " , distt , "\t" , counter)
@@ -104,12 +96,13 @@ class Main:
                     m_scores[1].append(counter)
                 counter = counter + (fps-14)
                 frame1 = frame2
-            end_t = time.time()
-            totall = end_t - start_t
-            #print ("Time consumed in main function while = ", totall)
-            #cv2.imshow(video_path,frame2)
-            #cv2.waitKey(2)
-        
+
+            else:
+                end_t = time.time()
+                totall = end_t - start_t
+                print ("Time consumed in main function while = ", totall)
+                break
+            
         capture.release()  
 #        cv2.destroyAllWindows()
 

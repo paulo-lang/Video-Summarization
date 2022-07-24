@@ -8,8 +8,9 @@ Created on Wed Jun  6 00:49:54 2018
 import glob
 import cv2
 import numpy as np
+import time
 
-root_dir = '/home/paulosantos/Downloads/Keyframes/Cam1/temp/'
+root_dir = '/home/paulosantos/Downloads/Keyframes/1min/temp/'
 pth = root_dir + "*.png"
 tt = glob.glob(pth)
 #for i in range(1,len(tt)):
@@ -25,6 +26,7 @@ tt = glob.glob(pth)
 #            cv2.imwrite(pathh, query_img)
 
 i = 0
+start_t = time.time()
 #for i in range(1,len(tt)):
 while i < len(tt):
     query_img = cv2.imread(tt[i])
@@ -45,7 +47,7 @@ while i < len(tt):
         pathh = root_dir + 'kf/' + image_name[7] 
 #        print (pathh)
         
-        if difference < 3000: 
+        if difference < 6500: 
             exclude = True
 
     print(image_name[7])
@@ -55,3 +57,7 @@ while i < len(tt):
         cv2.imwrite(pathh, query_img)
     
     i = i + 1
+
+end_t = time.time()
+totall = end_t - start_t
+print ("Time consumed in main function while = ", totall)
