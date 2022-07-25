@@ -33,22 +33,23 @@ while i < len(tt):
     exclude = False
     image_name = tt[i].split('/')
    
-#    query_histt = cv2.calcHist([query_img],[0],None,[255],[0,256])
+    query_histt = cv2.calcHist([query_img],[0],None,[255],[0,256])
     for j in range(i+1,len(tt)):
         compare_img = cv2.imread(tt[j])
-#        compare_histt = cv2.calcHist([compare_img],[0],None,[255],[0,256])
+        compare_histt = cv2.calcHist([compare_img],[0],None,[255],[0,256])
         
-#        distt = cv2.compareHist(query_histt,compare_histt,0)
+        distt = cv2.compareHist(query_histt,compare_histt,0)
 #        print (" distance = " , distt)
-        difference = np.sum((query_img.astype("float") - compare_img.astype("float")) ** 2)
-        difference /= float(query_img.shape[0] * compare_img.shape[1])
+        #difference = np.sum((query_img.astype("float") - compare_img.astype("float")) ** 2)
+        #difference /= float(query_img.shape[0] * compare_img.shape[1])
 
         #print ("Score = " , score)
         pathh = root_dir + 'kf/' + image_name[7] 
 #        print (pathh)
         
-        if difference < 6500: 
+        if distt > 0.8 : 
             exclude = True
+            break
 
     print(image_name[7])
     print(exclude)        
